@@ -1,16 +1,17 @@
 ﻿using Domain;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 
 namespace Persistence
 {
-    public class DataContext: DbContext
+    public class DataContext: IdentityDbContext<User>
     {
         public DbSet<Value> Values { get; set; }
-        public DbSet<User> Users { get; set; }
         public DbSet<Records> Records { get; set; }
         public DbSet<HealthComplaint> HealthComplaints { get; set; }
         public DbSet<BasicParameters> BasicParameters { get; set; }
+        public DbSet<Pacient> Pacients { get; set; }
 
         public DataContext() : base()
         {

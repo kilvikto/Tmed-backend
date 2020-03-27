@@ -9,11 +9,11 @@ namespace Domain
         public string Name { get; set; }
         public DateTime DateOfBirth { get; set; }
         public string Surname { get; set; }
-        public string Gender { get; set; }
         [MaxLength(6)]
+        public string Gender { get; set; }
         public int Age { get; set; }
-        public string Adress1 { get; set; }
-        public string Adress2 { get; set; }
+        public string Address1 { get; set; }
+        public string Address2 { get; set; }
 
     }
 }

@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Domain;
+using FluentValidation;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,10 +25,12 @@ namespace API
             {
                 var services = scope.ServiceProvider;
                 var context = services.GetService<DataContext>();
+                var userManager = services.GetService<UserManager<User>>();
                 context.Database.Migrate();
-                Seed.SeedData(context).Wait();
+                Seed.SeedData(context, userManager).Wait();
 
             }
+            ValidatorOptions.LanguageManager.Enabled = false;
             host.Run();
         }
 
