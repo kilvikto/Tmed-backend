@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace API.Controllers
@@ -25,6 +26,12 @@ namespace API.Controllers
         public async Task<ActionResult<UserDto>> Login(Login.Command req)
         {
             return await Mediator.Send(req);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<UserDto>> GetUser()
+        {
+            return await Mediator.Send(new GetUser.Query());
         }
 
     }

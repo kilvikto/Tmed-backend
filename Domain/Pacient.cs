@@ -8,9 +8,22 @@ namespace Domain
     public class Pacient
     {
         [Key]
-        public Guid Id { get; set; }
+        public uint Id { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
+        [MaxLength(6)]
         public DateTime Birthday { get; set; }
+        public string Gender { get; set; }
+        public string Email { get; set; }
+        public string Telefon_num { get; set; }
+        public string Country { get; set; }
+        public string City { get; set; }
+        public string Street { get; set; }
+        public string House_num { get; set; }
+        public int Height { get; set; }
+        public float Weight { get; set; }
+        public string Note { get; set; }
+        public virtual User User { get; set; }
+        public string UserId { get; set; }
     }
 }

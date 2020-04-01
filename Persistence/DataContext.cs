@@ -9,8 +9,6 @@ namespace Persistence
     {
         public DbSet<Value> Values { get; set; }
         public DbSet<Records> Records { get; set; }
-        public DbSet<HealthComplaint> HealthComplaints { get; set; }
-        public DbSet<BasicParameters> BasicParameters { get; set; }
         public DbSet<Pacient> Pacients { get; set; }
 
         public DataContext() : base()

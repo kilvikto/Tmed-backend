@@ -58,8 +58,10 @@ namespace Application.Users
                 {
                     return new UserDto
                     {
-                        Name = user.Name,
-                        UserName = user.UserName,
+                        Role = user.Role,
+                        Email = user.Email,
+                        Username = user.UserName,
+                        //UserName = user.UserName,
                         Token = _jwtGenerator.CreateToken(user)
                     };
                 }

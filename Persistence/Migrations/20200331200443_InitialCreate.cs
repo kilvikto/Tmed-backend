@@ -40,13 +40,7 @@ namespace Persistence.Migrations
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    DateOfBirth = table.Column<DateTime>(nullable: false),
-                    Surname = table.Column<string>(nullable: true),
-                    Gender = table.Column<string>(maxLength: 6, nullable: true),
-                    Age = table.Column<int>(nullable: false),
-                    Address1 = table.Column<string>(nullable: true),
-                    Address2 = table.Column<string>(nullable: true)
+                    Role = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -54,43 +48,34 @@ namespace Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "BasicParameters",
+                name: "Pacients",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    BloodGlucose = table.Column<float>(nullable: false),
-                    Pressure = table.Column<int>(nullable: false),
-                    Temperature = table.Column<float>(nullable: false),
-                    Pulse = table.Column<int>(nullable: false)
+                    Id = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    Surname = table.Column<string>(nullable: true),
+                    Birthday = table.Column<DateTime>(maxLength: 6, nullable: false),
+                    Gender = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(nullable: true),
+                    Telefon_num = table.Column<char>(nullable: false),
+                    Country = table.Column<string>(nullable: true),
+                    City = table.Column<string>(nullable: true),
+                    Street = table.Column<string>(nullable: true),
+                    Hous_num = table.Column<char>(nullable: false),
+                    Height = table.Column<int>(nullable: false),
+                    Weight = table.Column<float>(nullable: false),
+                    Text = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BasicParameters", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "HealthComplaints",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    IsIndigestion = table.Column<bool>(nullable: false),
-                    IsRheum = table.Column<bool>(nullable: false),
-                    IsSoreThroat = table.Column<bool>(nullable: false),
-                    IsNausea = table.Column<bool>(nullable: false),
-                    IsHeadache = table.Column<bool>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_HealthComplaints", x => x.Id);
+                    table.PrimaryKey("PK_Pacients", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Values",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false),
+                    Id = table.Column<string>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     Surname = table.Column<string>(nullable: true)
                 },
@@ -213,24 +198,20 @@ namespace Persistence.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     TimeOfReceipt = table.Column<DateTime>(nullable: false),
                     UserIdId = table.Column<string>(nullable: true),
-                    BasicParametersId = table.Column<int>(nullable: true),
-                    HealthComplaintId = table.Column<int>(nullable: true)
+                    BloodGlucose = table.Column<float>(nullable: false),
+                    PressureUp = table.Column<int>(nullable: false),
+                    PressureDown = table.Column<int>(nullable: false),
+                    Pulse = table.Column<int>(nullable: false),
+                    Temperature = table.Column<float>(nullable: false),
+                    IsIndigestion = table.Column<bool>(nullable: false),
+                    IsRheum = table.Column<bool>(nullable: false),
+                    IsSoreThroat = table.Column<bool>(nullable: false),
+                    IsNausea = table.Column<bool>(nullable: false),
+                    IsHeadache = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Records", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Records_BasicParameters_BasicParametersId",
-                        column: x => x.BasicParametersId,
-                        principalTable: "BasicParameters",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Records_HealthComplaints_HealthComplaintId",
-                        column: x => x.HealthComplaintId,
-                        principalTable: "HealthComplaints",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Records_AspNetUsers_UserIdId",
                         column: x => x.UserIdId,
@@ -277,16 +258,6 @@ namespace Persistence.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Records_BasicParametersId",
-                table: "Records",
-                column: "BasicParametersId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Records_HealthComplaintId",
-                table: "Records",
-                column: "HealthComplaintId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Records_UserIdId",
                 table: "Records",
                 column: "UserIdId");
@@ -310,6 +281,9 @@ namespace Persistence.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Pacients");
+
+            migrationBuilder.DropTable(
                 name: "Records");
 
             migrationBuilder.DropTable(
@@ -317,12 +291,6 @@ namespace Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
-
-            migrationBuilder.DropTable(
-                name: "BasicParameters");
-
-            migrationBuilder.DropTable(
-                name: "HealthComplaints");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

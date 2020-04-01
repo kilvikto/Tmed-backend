@@ -9,8 +9,8 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20200327005822_CreateProfile")]
-    partial class CreateProfile
+    [Migration("20200331200443_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -18,54 +18,37 @@ namespace Persistence.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.1.11-servicing-32099");
 
-            modelBuilder.Entity("Domain.BasicParameters", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<float>("BloodGlucose");
-
-                    b.Property<int>("Pressure");
-
-                    b.Property<int>("Pulse");
-
-                    b.Property<float>("Temperature");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("BasicParameters");
-                });
-
-            modelBuilder.Entity("Domain.HealthComplaint", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<bool>("IsHeadache");
-
-                    b.Property<bool>("IsIndigestion");
-
-                    b.Property<bool>("IsNausea");
-
-                    b.Property<bool>("IsRheum");
-
-                    b.Property<bool>("IsSoreThroat");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("HealthComplaints");
-                });
-
             modelBuilder.Entity("Domain.Pacient", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("Birthday");
+                    b.Property<DateTime>("Birthday")
+                        .HasMaxLength(6);
+
+                    b.Property<string>("City");
+
+                    b.Property<string>("Country");
+
+                    b.Property<string>("Email");
+
+                    b.Property<string>("Gender");
+
+                    b.Property<int>("Height");
+
+                    b.Property<char>("Hous_num");
 
                     b.Property<string>("Name");
 
+                    b.Property<string>("Street");
+
                     b.Property<string>("Surname");
+
+                    b.Property<char>("Telefon_num");
+
+                    b.Property<string>("Text");
+
+                    b.Property<float>("Weight");
 
                     b.HasKey("Id");
 
@@ -77,19 +60,31 @@ namespace Persistence.Migrations
                     b.Property<uint>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("BasicParametersId");
+                    b.Property<float>("BloodGlucose");
 
-                    b.Property<int?>("HealthComplaintId");
+                    b.Property<bool>("IsHeadache");
+
+                    b.Property<bool>("IsIndigestion");
+
+                    b.Property<bool>("IsNausea");
+
+                    b.Property<bool>("IsRheum");
+
+                    b.Property<bool>("IsSoreThroat");
+
+                    b.Property<int>("PressureDown");
+
+                    b.Property<int>("PressureUp");
+
+                    b.Property<int>("Pulse");
+
+                    b.Property<float>("Temperature");
 
                     b.Property<DateTime>("TimeOfReceipt");
 
                     b.Property<string>("UserIdId");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("BasicParametersId");
-
-                    b.HasIndex("HealthComplaintId");
 
                     b.HasIndex("UserIdId");
 
@@ -103,30 +98,17 @@ namespace Persistence.Migrations
 
                     b.Property<int>("AccessFailedCount");
 
-                    b.Property<string>("Address1");
-
-                    b.Property<string>("Address2");
-
-                    b.Property<int>("Age");
-
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
-
-                    b.Property<DateTime>("DateOfBirth");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256);
 
                     b.Property<bool>("EmailConfirmed");
 
-                    b.Property<string>("Gender")
-                        .HasMaxLength(6);
-
                     b.Property<bool>("LockoutEnabled");
 
                     b.Property<DateTimeOffset?>("LockoutEnd");
-
-                    b.Property<string>("Name");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256);
@@ -140,9 +122,9 @@ namespace Persistence.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed");
 
-                    b.Property<string>("SecurityStamp");
+                    b.Property<string>("Role");
 
-                    b.Property<string>("Surname");
+                    b.Property<string>("SecurityStamp");
 
                     b.Property<bool>("TwoFactorEnabled");
 
@@ -284,14 +266,6 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Records", b =>
                 {
-                    b.HasOne("Domain.BasicParameters", "BasicParameters")
-                        .WithMany()
-                        .HasForeignKey("BasicParametersId");
-
-                    b.HasOne("Domain.HealthComplaint", "HealthComplaint")
-                        .WithMany()
-                        .HasForeignKey("HealthComplaintId");
-
                     b.HasOne("Domain.User", "UserId")
                         .WithMany()
                         .HasForeignKey("UserIdId");

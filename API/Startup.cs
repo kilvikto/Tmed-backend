@@ -83,6 +83,7 @@ namespace API
                     }
                 );
             services.AddScoped<IJwtGenerator, JwtGenerator>();
+            services.AddScoped<IUserAccessor, UserAccessor>();
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -93,7 +94,7 @@ namespace API
             //    app.UseDeveloperExceptionPage();
             //}
             app.UseCors("CorsPolicy");
-            //app.UseAuthentication();
+            app.UseAuthentication();
             app.UseMvc();
         }
     }

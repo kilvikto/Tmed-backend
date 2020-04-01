@@ -4,7 +4,7 @@ namespace Domain
 {
     public class Value
     {
-        public Guid Id { get; set; }
+        public uint Id { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
     }

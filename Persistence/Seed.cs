@@ -18,15 +18,8 @@ namespace Persistence
                 {
                     new User
                     {
-                        Name = "John",
-                        DateOfBirth = DateTime.Parse("1997-12-14"),
-                        UserName = "john1997",
                         Email = "john1997@gmail.com",
-                        Age = 22,
-                        Gender = "male",
-                        Address1 = "Prague",
-                        Address2 = "Amerika",
-                        Surname = "Black"
+                        Role = "doctor"
                     }
                 };
 

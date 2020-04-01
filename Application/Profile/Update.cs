@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Application.Profile
 {
-    public class Create
+    public class Update
     {
         public class Command : IRequest
         {
@@ -21,14 +21,14 @@ namespace Application.Profile
             public DateTime Birthday { get; set; }
             public string Gender { get; set; }
             public string Email { get; set; }
-            public string Telefon_num { get; set; }
+            public char Telefon_num { get; set; }
             public string Country { get; set; }
             public string City { get; set; }
             public string Street { get; set; }
-            public string House_num { get; set; }
+            public char House_num { get; set; }
             public int Height { get; set; }
             public float Weight { get; set; }
-            public string Note{ get; set; }
+            public string Text { get; set; }
         }
 
         public class CommandValidator : AbstractValidator<Command>
@@ -57,26 +57,12 @@ namespace Application.Profile
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
                 var username = userAccessor.GetUsername();
-                var user = context.Users.SingleOrDefault(x => x.UserName == username);
-                var pacient = new Pacient
-                {
-                    Name = request.Name,
-                    Surname = request.Surname,
-                    Birthday = request.Birthday,
-                    Gender = request.Gender,
-                    Email = request.Email,
-                    Telefon_num = request.Telefon_num,
-                    Country = request.Country,
-                    Street = request.Street,
-                    House_num = request.House_num,
-                    Height = request.Height,
-                    Weight = request.Weight,
-                    Note = request.Note,
-                    User = user,
-                    UserId = user.Id
+                var userId = context.Users.SingleOrDefault(x => x.UserName == username).Id;
+                var pacient = context.Pacients.SingleOrDefault(x => x.UserId == userId);
 
-                };
-                context.Pacients.Add(pacient);
+                pacient.Name = request.Name ?? pacient.Name;
+                pacient.Street = request.Street ?? pacient.Street;
+                //context.Pacients.Add(pacient);
 
                 var success = await context.SaveChangesAsync(cancellationToken) > 0;
 
