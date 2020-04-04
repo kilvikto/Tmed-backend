@@ -108,8 +108,8 @@ namespace Application.Users
                         {
                             Token = _jwtGenerator.CreateToken(user),
                             Role = user.Role,
-                            //Email = user.Email,
-                            //Username = user.UserName
+                            Email = user.Email,
+                            Username = user.UserName
                             //UserName = user.UserName
                         };
                     }

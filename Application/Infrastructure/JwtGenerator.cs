@@ -15,7 +15,8 @@ namespace Application.Infrastructure
         {
             var claims = new List<Claim>
             {
-                new Claim(JwtRegisteredClaimNames.NameId, user.UserName)
+                new Claim(JwtRegisteredClaimNames.NameId, user.UserName),
+                new Claim(JwtRegisteredClaimNames.Typ, user.Role)
             };
 
             var creds = new SigningCredentials(
