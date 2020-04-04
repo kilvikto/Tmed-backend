@@ -4,8 +4,13 @@ namespace Domain
 {
     public class Value
     {
-        public uint Id { get; set; }
+        public long Id { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
     }
 }
+
+
+
+
+

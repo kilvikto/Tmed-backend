@@ -10,6 +10,7 @@ namespace Persistence
         public DbSet<Value> Values { get; set; }
         public DbSet<Records> Records { get; set; }
         public DbSet<Pacient> Pacients { get; set; }
+        public DbSet<Doctor> Doctors { get; set; }
 
         public DataContext() : base()
         {
@@ -23,6 +24,9 @@ namespace Persistence
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+            builder.Entity<Pacient>()
+                .Property(p => p.DoctorId)
+                .IsRequired(false);
             //builder.Entity<Value>().HasData(
             //    new Value { Id = new Guid(), Name = "John", Surname = "Smith" }
             //    );

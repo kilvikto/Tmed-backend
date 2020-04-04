@@ -7,8 +7,7 @@ namespace Domain
 {
     public class Pacient
     {
-        [Key]
-        public uint Id { get; set; }
+        public long Id { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         [MaxLength(6)]
@@ -25,5 +24,8 @@ namespace Domain
         public string Note { get; set; }
         public virtual User User { get; set; }
         public string UserId { get; set; }
+
+        public virtual Doctor Doctor { get; set; }
+        public Guid? DoctorId { get; set; }
     }
 }

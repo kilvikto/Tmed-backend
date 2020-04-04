@@ -6,7 +6,7 @@ namespace Domain
 {
     public class Records
     {
-        public uint Id { get; set; } 
+        public long Id { get; set; } 
         public DateTime TimeOfReceipt { get; set; }
         public virtual User UserId { get; set; }
         public float BloodGlucose { get; set; }

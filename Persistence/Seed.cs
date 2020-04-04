@@ -28,16 +28,6 @@ namespace Persistence
                     await userManager.CreateAsync(user, "Pa$$w0rd");
                 }
             }
-            if(!context.Values.Any())
-            {
-                var values = new List<Value>
-                {
-                    new Value { Name = "John", Surname= "Black"},
-                    new Value { Name = "Sara", Surname="Conor"}
-                };
-                await context.Values.AddRangeAsync(values);
-                await context.SaveChangesAsync();
-            }
         }
     }
 }

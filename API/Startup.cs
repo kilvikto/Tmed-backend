@@ -44,7 +44,7 @@ namespace API
             services.AddDbContext<DataContext>(options =>
             {
                 options.UseLazyLoadingProxies();
-                options.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
             services.AddCors(opt =>
             {
@@ -56,7 +56,14 @@ namespace API
                 });
             });
             services.AddMediatR(typeof(List.Handler).Assembly);
-            services.AddIdentityCore<User>()
+            services.AddIdentityCore<User>(o =>
+                {
+                    o.Password.RequireDigit = false;
+                    o.Password.RequiredLength = 1;
+                    o.Password.RequireNonAlphanumeric = false;
+                    o.Password.RequireLowercase = false;
+                    o.Password.RequireUppercase = false;
+                })
                 .AddEntityFrameworkStores<DataContext>()
                 .AddSignInManager<SignInManager<User>>();
             //services.AddMvc(opt =>
