@@ -23,14 +23,14 @@ namespace Application.Users
             public string Password { get; set; }
         }
 
-        public class CommandValidator : AbstractValidator<Command>
-        {
-            public CommandValidator()
-            {
-                RuleFor(x => x.Password).Password();
-                RuleFor(x => x.Email).EmailAddress();
-            }
-        }
+       // public class CommandValidator : AbstractValidator<Command>
+        //{
+            //public CommandValidator()
+            //{
+                //RuleFor(x => x.Password).Password();
+                //RuleFor(x => x.Email).EmailAddress();
+            //}
+        //}
 
         public class Handler : IRequestHandler<Command, UserDto>
         {

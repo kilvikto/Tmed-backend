@@ -34,20 +34,20 @@ namespace Application.Users
             //public string PhoneNumber { get; set; }
         }
 
-        public class CommandValidator : AbstractValidator<Command>
-        {
-            public CommandValidator()
-            {
+        //public class CommandValidator : AbstractValidator<Command>
+        //{
+           // public CommandValidator()
+            //{
                 //RuleFor(x => x.Name).NotEmpty();
                 //RuleFor(x => x.DateOfBirth).NotEmpty();
                 //RuleFor(x => x.Surname).NotEmpty();
                 //RuleFor(x => x.Gender).NotEmpty();
                 //RuleFor(x => x.Address1).NotEmpty();
                 //RuleFor(x => x.Address2).NotEmpty();
-                RuleFor(x => x.Password).Password();
-                RuleFor(x => x.Email).EmailAddress();
-            }
-        }
+                //RuleFor(x => x.Password).Password();
+                //RuleFor(x => x.Email).EmailAddress();
+            //}
+        //}
 
         public class Handler : IRequestHandler<Command, UserDto>
         {
@@ -65,9 +65,11 @@ namespace Application.Users
             public async Task<UserDto> Handle(Command request, CancellationToken cancellationToken)
             {
                 if (await _dataContext.Users.Where(x => x.Email == request.Email).AnyAsync())
-                    throw new RestException(HttpStatusCode.BadRequest, new { Email = "Email already exist" });
-                //if (await _dataContext.Users.Where(x => x.UserName == request.UserName).AnyAsync())
-                    //throw new RestException(HttpStatusCode.BadRequest, new { UserName = "UserName already exist" });
+                    throw new RestException(HttpStatusCode.BadRequest, new { message = "Email already exist" });
+
+                if (await _dataContext.Users.Where(x => x.UserName == request.Email).AnyAsync())
+                    throw new RestException(HttpStatusCode.BadRequest, new { message = "UserName already exist" });
+
                 var user = new User
                 {
                     //Name = request.Name,
@@ -86,16 +88,31 @@ namespace Application.Users
                 };
                 var result = await _userManager.CreateAsync(user, request.Password);
 
-                if(result.Succeeded)
+
+
+                if (result.Succeeded)
                 {
-                    return new UserDto
+                    if (request.Role.ToLower() == "doctor")
                     {
-                        Token = _jwtGenerator.CreateToken(user),
-                        Role = user.Role,
-                        Email = user.Email,
-                        Username = user.UserName
-                        //UserName = user.UserName
+                        _dataContext.Doctors.Add(new Domain.Doctor { User = user });
                     };
+                    if (request.Role.ToLower() == "pacient")
+                    {
+                        _dataContext.Pacients.Add(new Pacient { User = user });
+                    }
+                    var success = await _dataContext.SaveChangesAsync(cancellationToken) > 0;
+
+                    if (success)
+                    {
+                        return new UserDto
+                        {
+                            Token = _jwtGenerator.CreateToken(user),
+                            Role = user.Role,
+                            Email = user.Email,
+                            Username = user.UserName
+                            //UserName = user.UserName
+                        };
+                    }
                 }
 
                 throw new Exception("Problem with saving changes");
