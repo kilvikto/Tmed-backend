@@ -18,29 +18,30 @@ namespace Application.Profile
         {
             public string Name { get; set; }
             public string Surname { get; set; }
-            public DateTime Birthday { get; set; }
+            public DateTime? Birthday { get; set; }
             public string Gender { get; set; }
             public string Email { get; set; }
-            public char Telefon_num { get; set; }
+            public string Telefon_num { get; set; }
             public string Country { get; set; }
             public string City { get; set; }
             public string Street { get; set; }
-            public char House_num { get; set; }
-            public int Height { get; set; }
-            public float Weight { get; set; }
-            public string Text { get; set; }
+            public string House_num { get; set; }
+            public int? Height { get; set; }
+            public float? Weight { get; set; }
+            public Guid? DoctorId { get; set; }
+            public string Note { get; set; }
         }
 
-        public class CommandValidator : AbstractValidator<Command>
-        {
-            public CommandValidator()
-            {
-                RuleFor(x => x.Name).NotEmpty();
-                RuleFor(x => x.Surname).NotEmpty();
-                RuleFor(x => x.Birthday).NotEmpty();
-                RuleFor(x => x.Email).EmailAddress();
-            }
-        }
+        //public class CommandValidator : AbstractValidator<Command>
+        //{
+            //public CommandValidator()
+            //{
+                //RuleFor(x => x.Name).NotEmpty();
+                //RuleFor(x => x.Surname).NotEmpty();
+                //RuleFor(x => x.Birthday).NotEmpty();
+                //RuleFor(x => x.Email).EmailAddress();
+            //}
+        //}
 
 
         public class Handler : IRequestHandler<Command>
@@ -61,7 +62,20 @@ namespace Application.Profile
                 var pacient = context.Pacients.SingleOrDefault(x => x.UserId == userId);
 
                 pacient.Name = request.Name ?? pacient.Name;
+                pacient.Surname = request.Surname ?? pacient.Surname;
+                pacient.Birthday = request.Birthday ?? pacient.Birthday;
+                pacient.Gender = request.Gender ?? pacient.Gender;
+                pacient.Email = request.Email ?? pacient.Email;
+                pacient.Telefon_num = request.Telefon_num ?? pacient.Telefon_num;
+                pacient.Country = request.Country ?? pacient.Country;
+                pacient.City = request.City ?? pacient.City;
                 pacient.Street = request.Street ?? pacient.Street;
+                pacient.House_num = request.House_num ?? pacient.House_num;
+                pacient.Height = request.Height ?? pacient.Height;
+                pacient.Weight = request.Weight ?? pacient.Weight;
+                pacient.Note = request.Note ?? pacient.Note;
+                pacient.DoctorId = request.DoctorId ?? pacient.DoctorId;
+
                 //context.Pacients.Add(pacient);
 
                 var success = await context.SaveChangesAsync(cancellationToken) > 0;

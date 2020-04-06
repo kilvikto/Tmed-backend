@@ -107,9 +107,9 @@ namespace Application.Users
                         return new UserDto
                         {
                             Token = _jwtGenerator.CreateToken(user),
-                            Role = user.Role,
-                            Email = user.Email,
-                            Username = user.UserName
+                            //Role = user.Role,
+                            //Email = user.Email,
+                            //Username = user.UserName
                             //UserName = user.UserName
                         };
                     }

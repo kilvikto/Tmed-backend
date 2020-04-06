@@ -31,16 +31,16 @@ namespace Application.Profile
             public string Note{ get; set; }
         }
 
-        public class CommandValidator : AbstractValidator<Command>
-        {
-            public CommandValidator()
-            {
-                RuleFor(x => x.Name).NotEmpty();
-                RuleFor(x => x.Surname).NotEmpty();
-                RuleFor(x => x.Birthday).NotEmpty();
-                RuleFor(x => x.Email).EmailAddress();
-            }
-        }
+        //public class CommandValidator : AbstractValidator<Command>
+        //{
+            //public CommandValidator()
+            //{
+                //RuleFor(x => x.Name).NotEmpty();
+                //RuleFor(x => x.Surname).NotEmpty();
+                //RuleFor(x => x.Birthday).NotEmpty();
+                //RuleFor(x => x.Email).EmailAddress();
+            //}
+        //}
 
 
         public class Handler : IRequestHandler<Command>
