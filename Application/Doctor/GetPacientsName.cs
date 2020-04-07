@@ -32,7 +32,7 @@ namespace Application.Doctor
                 var pacientsNames = new List<PacientsNameDto>();
                 foreach (var pacient in pacients)
                 {
-                    pacientsNames.Add(new PacientsNameDto { Id = pacient.Id, Name = pacient.Name, Email = pacient.Email });
+                    pacientsNames.Add(new PacientsNameDto { Id = pacient.Id, Name = pacient.Name, Surname = pacient.Surname, Email = pacient.Email });
                 }
 
                 return pacientsNames;
