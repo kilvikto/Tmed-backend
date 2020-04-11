@@ -25,9 +25,9 @@ namespace Application.Doctor
                 var doctors = await context.Doctors.ToListAsync();
 
                 var doctorsDto = new List<DoctorDto>();
-                foreach (var docotor in doctors)
+                foreach (var doctor in doctors)
                 {
-                    doctorsDto.Add(new DoctorDto { Id = docotor.Id, Email = docotor.User.Email });
+                    doctorsDto.Add(new DoctorDto { Id = doctor.Id, Email = doctor.User.Email });
                 }
 
                 return doctorsDto;

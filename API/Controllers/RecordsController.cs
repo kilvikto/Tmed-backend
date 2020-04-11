@@ -1,4 +1,4 @@
-﻿using Application.Profile;
+﻿using Application.PacientRecords;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace API.Controllers
 {
-    public class ProfileController : BaseController
+    public class RecordsController : BaseController
     {
         [HttpPost]
         public async Task<ActionResult<Unit>> Create(Create.Command command)
@@ -23,15 +23,9 @@ namespace API.Controllers
 
 
         [HttpGet]
-        public async Task<ActionResult<PacientsProfileDto>> GetProfile()
+        public async Task<ActionResult<List<RecordsDto>>> GetProfile()
         {
-            return await Mediator.Send(new GetPacientProfilebyToken.Query());
-        }
-
-        [HttpGet("{id}")]
-        public async Task<ActionResult<PacientsProfileDto>> Get(string id)
-        {
-            return await Mediator.Send(new GetPacientsProfile.Query { PacientId = long.Parse(id) });
+            return await Mediator.Send(new GetRecords.Query());
         }
     }
 }

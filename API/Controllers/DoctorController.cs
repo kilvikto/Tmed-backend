@@ -11,15 +11,11 @@ namespace API.Controllers
 {
     public class DoctorController : BaseController
     {
-        [HttpGet("{id}")]
-        public async Task<ActionResult<List<PacientsNameDto>>> GetPacientsName(string id)
-        {
-            return await Mediator.Send(new GetPacientsName.Query { Id = Guid.Parse(id) });
-        }
         [HttpGet]
-        public async Task<ActionResult<List<DoctorDto>>> GetDoctors()
+        public async Task<ActionResult<List<PacientsNameDto>>> GetPacientsName()
         {
-            return await Mediator.Send(new GetDoctors.Query());
+            return await Mediator.Send(new GetPacientsName.Query ());
         }
+        
     }
 }

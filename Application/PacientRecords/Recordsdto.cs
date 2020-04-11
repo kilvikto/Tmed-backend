@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Domain
+namespace Application.PacientRecords
 {
-    public class Records
+    public class RecordsDto
     {
-        public long Id { get; set; } 
+        public long Id { get; set; }
+        public long PacientId { get; set; }
         public DateTime TimeOfReceipt { get; set; }
         public float BloodGlucose { get; set; }
         public int PressureUp { get; set; }
@@ -18,10 +19,5 @@ namespace Domain
         public bool IsSoreThroat { get; set; }
         public bool IsNausea { get; set; }
         public bool IsHeadache { get; set; }
-
-        public virtual Pacient Pacient{ get; set; }
-        public long PacientId { get; set; }
     }
-
 }
-

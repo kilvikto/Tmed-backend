@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace Domain
+namespace Application.Doctor
 {
-    public class Pacient
+    public class PacientsProfileDto
     {
         public long Id { get; set; }
         public string Name { get; set; }
@@ -21,16 +20,5 @@ namespace Domain
         public int Height { get; set; }
         public float Weight { get; set; }
         public string Note { get; set; }
-        public virtual User User { get; set; }
-        public string UserId { get; set; }
-
-        public virtual Doctor Doctor { get; set; }
-        public Guid? DoctorId { get; set; }
-
-        public virtual ICollection<HistoryDiseases> HistoryDiseases { get; set; }
-        public virtual ICollection<HistoryMedications> HistoryMedications { get; set; }
-        public virtual ICollection<HistoryAllergies> HistoryAllergies { get; set; }
-        public virtual ICollection<HistoryVaccinations> HistoryVaccinations { get; set; }
-
     }
 }
