@@ -9,14 +9,14 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.History
+namespace Application.MedicationsHistory
 {
-    public class CreateDisease
+    public class CreateMedication
     {
         public class Command : IRequest
         {
-            public string NameDisease { get; set; }
-            public bool IsNowSick { get; set; }
+            public string NameMedication { get; set; }
+            public bool IsNowApply { get; set; }
         }
         public class Handler : IRequestHandler<Command>
         {
@@ -34,17 +34,17 @@ namespace Application.History
                 var username = userAccessor.GetUsername();
                 var userId = context.Users.SingleOrDefault(x => x.UserName == username).Id;
                 var pacientId = context.Pacients.SingleOrDefault(x => x.UserId == userId).Id;
-                var historyDiseases = new HistoryDiseases
+                var historyMedications = new HistoryMedications
                 {
-                    Diseases = new Diseases
+                    Medications = new Medications
                     {
-                        NameDisease = request.NameDisease
+                        NameMedication = request.NameMedication
                     },
                     PacientId = pacientId,
-                    IsNowSick = request.IsNowSick,
-                    Date = DateTime.Now
+                    IsNowApply = request.IsNowApply
+                    //Date = DateTime.Now
                 };
-                context.HistoryDiseases.Add(historyDiseases);
+                context.HistoryMedications.Add(historyMedications);
 
                 var success = await context.SaveChangesAsync(cancellationToken) > 0;
 
@@ -54,8 +54,4 @@ namespace Application.History
             }
         }
     }
-   
 }
-
-
-

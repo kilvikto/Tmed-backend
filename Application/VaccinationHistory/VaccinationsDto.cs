@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Application.History
+namespace Application.VaccinationHistory
 {
-    public class DiseasesDto
+    public class VaccinationsDto
     {
         public long Id { get; set; }
         public long PacientId { get; set; }
-        public string NameDiseases { get; set; }
-        public bool IsNowSick { get; set; }
+        public string NameVaccination { get; set; }
     }
 }

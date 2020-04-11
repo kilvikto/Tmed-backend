@@ -9,15 +9,14 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.History
+namespace Application.VaccinationHistory
 {
-    public class GetDiseasesByToken
+    public class GetVaccinByToken
     {
-        public class Query : IRequest<List<DiseasesDto>>
+        public class Query : IRequest<List<VaccinationsDto>>
         {
-            //public long PacientId { get; set; }
         }
-        public class Handler : IRequestHandler<Query, List<DiseasesDto>>
+        public class Handler : IRequestHandler<Query, List<VaccinationsDto>>
         {
             private readonly DataContext context;
             private readonly IUserAccessor userAccessor;
@@ -27,26 +26,25 @@ namespace Application.History
                 this.context = context;
                 this.userAccessor = userAccessor;
             }
-            public async Task<List<DiseasesDto>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<List<VaccinationsDto>> Handle(Query request, CancellationToken cancellationToken)
             {
                 var username = userAccessor.GetUsername();
                 var userId = context.Users.SingleOrDefault(x => x.UserName == username).Id;
                 var pacientId = context.Pacients.SingleOrDefault(x => x.UserId == userId).Id;
-                var pacientDiseases = await context.HistoryDiseases.Where(x => x.PacientId == pacientId).ToListAsync();
+                var pacientVaccinations = await context.HistoryVaccinations.Where(x => x.PacientId == pacientId).ToListAsync();
 
-                var pacientDto = new List<DiseasesDto>();
-                foreach (var dto in pacientDiseases)
+                var vaccinationsDto = new List<VaccinationsDto>();
+                foreach (var vaccin in pacientVaccinations)
                 {
-                    pacientDto.Add(new DiseasesDto
+                    vaccinationsDto.Add(new VaccinationsDto
                     {
-                        Id = dto.DiseasesId,
-                        PacientId = dto.PacientId,
-                        NameDiseases = dto.Diseases.NameDisease,
-                        IsNowSick = dto.IsNowSick
+                        Id = vaccin.VaccinationsId,
+                        NameVaccination = vaccin.Vaccinations.NameVaccination,
+                        PacientId = vaccin.PacientId
                     });
                 }
 
-                return pacientDto;
+                return vaccinationsDto;
             }
         }
     }

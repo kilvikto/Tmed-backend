@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace API.Controllers
 {
-    public class AllDoctors : BaseController
+    public class AllDoctorsController : BaseController
     {
         [HttpGet]
         public async Task<ActionResult<List<DoctorDto>>> GetDoctors()

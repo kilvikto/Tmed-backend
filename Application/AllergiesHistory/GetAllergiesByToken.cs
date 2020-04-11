@@ -9,15 +9,14 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.History
+namespace Application.AllergiesHistory
 {
-    public class GetDiseasesByToken
+    public class GetAllergiesByToken
     {
-        public class Query : IRequest<List<DiseasesDto>>
+        public class Query : IRequest<List<AllergiesDto>>
         {
-            //public long PacientId { get; set; }
         }
-        public class Handler : IRequestHandler<Query, List<DiseasesDto>>
+        public class Handler : IRequestHandler<Query, List<AllergiesDto>>
         {
             private readonly DataContext context;
             private readonly IUserAccessor userAccessor;
@@ -27,26 +26,26 @@ namespace Application.History
                 this.context = context;
                 this.userAccessor = userAccessor;
             }
-            public async Task<List<DiseasesDto>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<List<AllergiesDto>> Handle(Query request, CancellationToken cancellationToken)
             {
                 var username = userAccessor.GetUsername();
                 var userId = context.Users.SingleOrDefault(x => x.UserName == username).Id;
                 var pacientId = context.Pacients.SingleOrDefault(x => x.UserId == userId).Id;
-                var pacientDiseases = await context.HistoryDiseases.Where(x => x.PacientId == pacientId).ToListAsync();
+                var pacientDiseases = await context.HistoryAllergies.Where(x => x.PacientId == pacientId).ToListAsync();
 
-                var pacientDto = new List<DiseasesDto>();
-                foreach (var dto in pacientDiseases)
+                var allergiesDto = new List<AllergiesDto>();
+                foreach (var allergy in pacientDiseases)
                 {
-                    pacientDto.Add(new DiseasesDto
+                    allergiesDto.Add(new AllergiesDto
                     {
-                        Id = dto.DiseasesId,
-                        PacientId = dto.PacientId,
-                        NameDiseases = dto.Diseases.NameDisease,
-                        IsNowSick = dto.IsNowSick
+                        Id = allergy.AllergiesId,
+                        PacientId = allergy.PacientId,
+                        NameAllergy = allergy.Allergies.NameAllergy,
+                        IsNowSick = allergy.IsNowSick
                     });
                 }
 
-                return pacientDto;
+                return allergiesDto;
             }
         }
     }

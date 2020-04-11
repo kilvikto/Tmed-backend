@@ -8,6 +8,7 @@ namespace Domain
     {
         public long Id { get; set; }
         public bool IsNowApply { get; set; }
+        //public DateTime Date { get; set; }
 
         public virtual Medications Medications { get; set; }
         public long MedicationsId { get; set; }

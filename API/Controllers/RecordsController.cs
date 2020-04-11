@@ -27,5 +27,11 @@ namespace API.Controllers
         {
             return await Mediator.Send(new GetRecords.Query());
         }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<List<RecordsDto>>> Get(string id)
+        {
+            return await Mediator.Send(new GetRecordsbyId.Query { PacientId = long.Parse(id) });
+        }
     }
 }

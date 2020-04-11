@@ -20,5 +20,11 @@ namespace API.Controllers
         {
             return await Mediator.Send(new GetDiseasesPacient.Query { PacientId = long.Parse(id) });
         }
+
+        [HttpGet]
+        public async Task<ActionResult<List<DiseasesDto>>> GetDiseasesByToken()
+        {
+            return await Mediator.Send(new GetDiseasesByToken.Query ());
+        }
     }
 }

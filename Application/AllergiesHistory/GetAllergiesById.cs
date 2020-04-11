@@ -8,15 +8,15 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.History
+namespace Application.AllergiesHistory
 {
-    public class GetDiseasesPacient
+    public class GetAllergiesById
     {
-        public class Query : IRequest<List<DiseasesDto>>
+        public class Query : IRequest<List<AllergiesDto>>
         {
             public long PacientId { get; set; }
         }
-        public class Handler : IRequestHandler<Query, List<DiseasesDto>>
+        public class Handler : IRequestHandler<Query, List<AllergiesDto>>
         {
             private readonly DataContext context;
 
@@ -24,18 +24,18 @@ namespace Application.History
             {
                 this.context = context;
             }
-            public async Task<List<DiseasesDto>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<List<AllergiesDto>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var pacientDiseases = await context.HistoryDiseases.Where(x => x.PacientId == request.PacientId).ToListAsync();
+                var pacientDiseases = await context.HistoryAllergies.Where(x => x.PacientId == request.PacientId).ToListAsync();
 
-                var pacientDto = new List<DiseasesDto>();
-                foreach(var dto in pacientDiseases)
+                var pacientDto = new List<AllergiesDto>();
+                foreach (var dto in pacientDiseases)
                 {
-                    pacientDto.Add(new DiseasesDto
+                    pacientDto.Add(new AllergiesDto
                     {
-                        Id = dto.DiseasesId,
+                        Id = dto.AllergiesId,
                         PacientId = dto.PacientId,
-                        NameDiseases = dto.Diseases.NameDisease,
+                        NameAllergy = dto.Allergies.NameAllergy,
                         IsNowSick = dto.IsNowSick
                     });
                 }

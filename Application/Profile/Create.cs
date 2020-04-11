@@ -20,7 +20,7 @@ namespace Application.Profile
             public string Surname { get; set; }
             public DateTime Birthday { get; set; }
             public string Gender { get; set; }
-            public string Email { get; set; }
+            //public string Email { get; set; }
             public string Telefon_num { get; set; }
             public string Country { get; set; }
             public string City { get; set; }
@@ -58,13 +58,14 @@ namespace Application.Profile
             {
                 var username = userAccessor.GetUsername();
                 var user = context.Users.SingleOrDefault(x => x.UserName == username);
+
                 var pacient = new Pacient
                 {
                     Name = request.Name,
                     Surname = request.Surname,
                     Birthday = request.Birthday,
                     Gender = request.Gender,
-                    Email = request.Email,
+                    Email = user.Email,
                     Telefon_num = request.Telefon_num,
                     Country = request.Country,
                     Street = request.Street,

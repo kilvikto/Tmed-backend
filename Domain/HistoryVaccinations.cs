@@ -7,6 +7,7 @@ namespace Domain
     public class HistoryVaccinations
     {
         public long Id { get; set; }
+        //public DateTime Date { get; set; }
 
         public virtual Pacient Pacient { get; set; }
         public long PacientId { get; set; }
