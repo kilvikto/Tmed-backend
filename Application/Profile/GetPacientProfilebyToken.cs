@@ -31,6 +31,8 @@ namespace Application.Profile
                 var username = userAccessor.GetUsername();
                 var userId =  context.Users.SingleOrDefault(x => x.UserName == username).Id;
                 var pacient = context.Pacients.SingleOrDefault(x => x.UserId == userId);
+                var doctorUserId = context.Doctors.SingleOrDefault(x => x.Id == pacient.DoctorId).UserId;
+                var doctorEmail = context.Users.SingleOrDefault(x => x.Id == doctorUserId).Email;
 
                 return new PacientsProfileDto
                 {
@@ -47,7 +49,9 @@ namespace Application.Profile
                     Street = pacient.Street,
                     Surname = pacient.Surname,
                     Telefon_num = pacient.Telefon_num,
-                    Weight = pacient.Weight
+                    Weight = pacient.Weight,
+                    DoctorId = pacient.DoctorId,
+                    DoctorEmail = doctorEmail
                 };
             }
 

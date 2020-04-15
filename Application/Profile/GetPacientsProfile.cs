@@ -30,6 +30,8 @@ namespace Application.Profile
             public async Task<PacientsProfileDto> Handle(Query request, CancellationToken cancellationToken)
             {
                 var pacient = await context.Pacients.SingleOrDefaultAsync(x => x.Id == request.PacientId);
+                var doctorUserId = context.Doctors.SingleOrDefault(x => x.Id == pacient.DoctorId).UserId;
+                var doctorEmail = context.Users.SingleOrDefault(x => x.Id == doctorUserId).Email;
 
                 return new PacientsProfileDto
                 {
@@ -46,7 +48,9 @@ namespace Application.Profile
                     Street = pacient.Street,
                     Surname = pacient.Surname,
                     Telefon_num = pacient.Telefon_num,
-                    Weight = pacient.Weight
+                    Weight = pacient.Weight,
+                    DoctorId = pacient.DoctorId,
+                    DoctorEmail = doctorEmail
                 };
             }
         }

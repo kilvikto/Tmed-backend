@@ -20,5 +20,7 @@ namespace Application.Profile
         public int Height { get; set; }
         public float Weight { get; set; }
         public string Note { get; set; }
+        public Guid? DoctorId { get; set; }
+        public string DoctorEmail { get; set; }
     }
 }
