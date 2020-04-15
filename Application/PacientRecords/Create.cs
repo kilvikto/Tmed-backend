@@ -1,10 +1,13 @@
-﻿using Application.Interfaces;
+﻿using Application.Errors;
+using Application.Interfaces;
 using Domain;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Persistence;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -41,6 +44,8 @@ namespace Application.PacientRecords
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
+                if (await context.Records.Where(x => x.TimeOfReceipt == request.TimeOfReceipt).AnyAsync())
+                    throw new RestException(HttpStatusCode.BadRequest, new { message = "Data already exist" });
                 var username = userAccessor.GetUsername();
                 var userId = context.Users.SingleOrDefault(x => x.UserName == username).Id;
                 var pacient = context.Pacients.SingleOrDefault(x => x.UserId == userId);
