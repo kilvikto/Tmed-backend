@@ -35,8 +35,8 @@ namespace Application.AllergiesHistory
                     {
                         Id = dto.AllergiesId,
                         PacientId = dto.PacientId,
-                        NameAllergy = dto.Allergies.NameAllergy,
-                        IsNowSick = dto.IsNowSick
+                        name = dto.Allergies.name,
+                        //IsNowSick = dto.IsNowSick
                     });
                 }
 

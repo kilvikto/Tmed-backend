@@ -15,8 +15,8 @@ namespace Application.History
     {
         public class Command : IRequest
         {
-            public string NameDisease { get; set; }
-            public bool IsNowSick { get; set; }
+            public string name { get; set; }
+            //public bool IsNowSick { get; set; }
         }
         public class Handler : IRequestHandler<Command>
         {
@@ -38,11 +38,11 @@ namespace Application.History
                 {
                     Diseases = new Diseases
                     {
-                        NameDisease = request.NameDisease
+                        name = request.name
                     },
                     PacientId = pacientId,
-                    IsNowSick = request.IsNowSick,
-                    Date = DateTime.Now
+                    //IsNowSick = request.IsNowSick,
+                    //Date = DateTime.Now
                 };
                 context.HistoryDiseases.Add(historyDiseases);
 

@@ -8,7 +8,7 @@ namespace Application.AllergiesHistory
     {
         public long Id { get; set; }
         public long PacientId { get; set; }
-        public string NameAllergy { get; set; }
-        public bool IsNowSick { get; set; }
+        public string name { get; set; }
+        //public bool IsNowSick { get; set; }
     }
 }

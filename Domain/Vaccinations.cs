@@ -7,7 +7,7 @@ namespace Domain
     public class Vaccinations
     {
         public long Id { get; set; }
-        public string NameVaccination { get; set; }
+        public string name { get; set; }
         public virtual ICollection<HistoryVaccinations> HistoryVaccinations { get; set; }
     }
 }

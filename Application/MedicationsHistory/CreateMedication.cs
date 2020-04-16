@@ -15,8 +15,8 @@ namespace Application.MedicationsHistory
     {
         public class Command : IRequest
         {
-            public string NameMedication { get; set; }
-            public bool IsNowApply { get; set; }
+            public string name { get; set; }
+            //public bool IsNowApply { get; set; }
         }
         public class Handler : IRequestHandler<Command>
         {
@@ -38,10 +38,10 @@ namespace Application.MedicationsHistory
                 {
                     Medications = new Medications
                     {
-                        NameMedication = request.NameMedication
+                        name = request.name
                     },
                     PacientId = pacientId,
-                    IsNowApply = request.IsNowApply
+                    //IsNowApply = request.IsNowApply
                     //Date = DateTime.Now
                 };
                 context.HistoryMedications.Add(historyMedications);

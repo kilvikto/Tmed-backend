@@ -15,7 +15,7 @@ namespace Application.VaccinationHistory
     {
         public class Command : IRequest
         {
-            public string NameVaccination { get; set; }
+            public string name { get; set; }
         }
         public class Handler : IRequestHandler<Command>
         {
@@ -37,7 +37,7 @@ namespace Application.VaccinationHistory
                 {
                     Vaccinations = new Vaccinations
                     {
-                        NameVaccination = request.NameVaccination
+                        name = request.name
                     },
                     PacientId = pacientId,
                     //Date = DateTime.Now

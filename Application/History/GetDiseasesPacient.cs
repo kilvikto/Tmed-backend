@@ -35,8 +35,8 @@ namespace Application.History
                     {
                         Id = dto.DiseasesId,
                         PacientId = dto.PacientId,
-                        NameDiseases = dto.Diseases.NameDisease,
-                        IsNowSick = dto.IsNowSick
+                        name = dto.Diseases.name,
+                        //IsNowSick = dto.IsNowSick
                     });
                 }
 

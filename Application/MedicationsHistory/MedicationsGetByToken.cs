@@ -40,8 +40,8 @@ namespace Application.MedicationsHistory
                     {
                         Id = medication.MedicationsId,
                         PacientId = medication.PacientId,
-                        NameMedication = medication.Medications.NameMedication,
-                        IsNowApply = medication.IsNowApply
+                        name = medication.Medications.name,
+                        //IsNowApply = medication.IsNowApply
                     });
                 }
 

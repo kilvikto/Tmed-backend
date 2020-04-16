@@ -7,7 +7,7 @@ namespace Domain
     public class Diseases
     {
         public long Id { get; set; }
-        public string NameDisease { get; set; }
+        public string name { get; set; }
         public virtual ICollection<HistoryDiseases> HistoryDiseases { get; set; }
     }
 }

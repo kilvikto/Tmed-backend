@@ -35,8 +35,8 @@ namespace Application.MedicationsHistory
                     {
                         Id = dto.MedicationsId,
                         PacientId = dto.PacientId,
-                        NameMedication = dto.Medications.NameMedication,
-                        IsNowApply = dto.IsNowApply
+                        name = dto.Medications.name,
+                        //IsNowApply = dto.IsNowApply
                     });
                 }
 

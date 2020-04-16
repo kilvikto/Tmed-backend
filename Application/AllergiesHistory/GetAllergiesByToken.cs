@@ -40,8 +40,8 @@ namespace Application.AllergiesHistory
                     {
                         Id = allergy.AllergiesId,
                         PacientId = allergy.PacientId,
-                        NameAllergy = allergy.Allergies.NameAllergy,
-                        IsNowSick = allergy.IsNowSick
+                        name = allergy.Allergies.name,
+                        //IsNowSick = allergy.IsNowSick
                     });
                 }
 

@@ -8,6 +8,6 @@ namespace Application.VaccinationHistory
     {
         public long Id { get; set; }
         public long PacientId { get; set; }
-        public string NameVaccination { get; set; }
+        public string name { get; set; }
     }
 }

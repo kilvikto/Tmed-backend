@@ -39,7 +39,7 @@ namespace Application.VaccinationHistory
                     vaccinationsDto.Add(new VaccinationsDto
                     {
                         Id = vaccin.VaccinationsId,
-                        NameVaccination = vaccin.Vaccinations.NameVaccination,
+                        name = vaccin.Vaccinations.name,
                         PacientId = vaccin.PacientId
                     });
                 }

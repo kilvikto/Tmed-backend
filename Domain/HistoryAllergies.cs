@@ -7,7 +7,7 @@ namespace Domain
     public class HistoryAllergies
     {
         public long Id { get; set; }
-        public bool IsNowSick { get; set; }
+        //public bool IsNowSick { get; set; }
         //public DateTime Date { get; set; }
 
         public virtual Allergies Allergies { get; set; }

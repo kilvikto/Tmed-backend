@@ -15,8 +15,8 @@ namespace Application.AllergiesHistory
     {
         public class Command : IRequest
         {
-            public string NameAllergy { get; set; }
-            public bool IsNowSick { get; set; }
+            public string name { get; set; }
+            //public bool IsNowSick { get; set; }
         }
         public class Handler : IRequestHandler<Command>
         {
@@ -38,10 +38,10 @@ namespace Application.AllergiesHistory
                 {
                     Allergies = new Allergies
                     {
-                        NameAllergy = request.NameAllergy
+                        name = request.name
                     },
                     PacientId = pacientId,
-                    IsNowSick = request.IsNowSick,
+                    //IsNowSick = request.IsNowSick,
                     //Date = DateTime.Now
                 };
                 context.HistoryAllergies.Add(historyAllergies);

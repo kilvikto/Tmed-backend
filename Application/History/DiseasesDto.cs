@@ -8,7 +8,7 @@ namespace Application.History
     {
         public long Id { get; set; }
         public long PacientId { get; set; }
-        public string NameDiseases { get; set; }
-        public bool IsNowSick { get; set; }
+        public string name { get; set; }
+        //public bool IsNowSick { get; set; }
     }
 }

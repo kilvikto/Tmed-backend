@@ -7,8 +7,8 @@ namespace Domain
     public class HistoryDiseases
     {
         public long Id { get; set; }
-        public DateTime Date { get; set; }
-        public bool IsNowSick { get; set; }
+        //public DateTime Date { get; set; }
+        //public bool IsNowSick { get; set; }
 
         public virtual Diseases Diseases { get; set; }
         public long DiseasesId { get; set; }
