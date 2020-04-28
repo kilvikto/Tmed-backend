@@ -31,14 +31,10 @@ namespace Application.Users
             }
             public async Task<UserDto> Handle(Query request, CancellationToken cancellationToken)
             {
-
                 var user = await _context.FindByNameAsync(_userAccessor.GetUsername());
                 return new UserDto
                 {
-                    //Email = user.Email,
-                    //Role = user.Role,
-                    Token = _jwtGenerator.CreateToken(user),
-                    //Username = user.UserName
+                    Token = _jwtGenerator.CreateToken(user)
                 };
             }
         }

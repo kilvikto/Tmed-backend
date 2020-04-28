@@ -19,14 +19,11 @@ namespace Application.Profile
         public class Handler : IRequestHandler<Query, PacientsProfileDto>
         {
             private readonly DataContext context;
-            private readonly IUserAccessor userAccessor;
 
-            public Handler(DataContext context, IUserAccessor userAccessor)
+            public Handler(DataContext context)
             {
                 this.context = context;
-                this.userAccessor = userAccessor;
             }
-
             public async Task<PacientsProfileDto> Handle(Query request, CancellationToken cancellationToken)
             {
                 var pacient = await context.Pacients.SingleOrDefaultAsync(x => x.Id == request.PacientId);

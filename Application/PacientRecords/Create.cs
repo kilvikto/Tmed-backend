@@ -44,12 +44,13 @@ namespace Application.PacientRecords
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-                if (await context.Records.Where(x => x.TimeOfReceipt == request.TimeOfReceipt).AnyAsync())
-                    throw new RestException(HttpStatusCode.BadRequest, new { message = "Data already exist" });
+
                 var username = userAccessor.GetUsername();
                 var userId = context.Users.SingleOrDefault(x => x.UserName == username).Id;
                 var pacient = context.Pacients.SingleOrDefault(x => x.UserId == userId);
                 var pacientId = pacient.Id;
+                if (await context.Records.Where(x => x.TimeOfReceipt == request.TimeOfReceipt && x.PacientId == pacientId).AnyAsync())
+                    throw new RestException(HttpStatusCode.BadRequest, new { message = "Data already exist" });
                 var record = new Records
                 {
                     PacientId = pacientId,

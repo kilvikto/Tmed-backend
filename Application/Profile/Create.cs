@@ -18,9 +18,9 @@ namespace Application.Profile
         {
             public string Name { get; set; }
             public string Surname { get; set; }
-            public DateTime Birthday { get; set; }
+            public string Birthday { get; set; }
             public string Gender { get; set; }
-            //public string Email { get; set; }
+            public string Email { get; set; }
             public string Telefon_num { get; set; }
             public string Country { get; set; }
             public string City { get; set; }
@@ -65,7 +65,7 @@ namespace Application.Profile
                     Surname = request.Surname,
                     Birthday = request.Birthday,
                     Gender = request.Gender,
-                    Email = user.Email,
+                    Email = request.Email,
                     Telefon_num = request.Telefon_num,
                     Country = request.Country,
                     Street = request.Street,
