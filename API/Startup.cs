@@ -42,7 +42,7 @@ namespace API
             services.AddDbContext<DataContext>(options =>
             {
                 options.UseLazyLoadingProxies();
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+                options.UseMySql(Configuration.GetConnectionString("DefaultConnection"));
             });
             services.AddCors(opt =>
             {
