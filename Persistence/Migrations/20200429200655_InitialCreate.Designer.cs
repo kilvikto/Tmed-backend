@@ -2,7 +2,6 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence;
@@ -10,7 +9,7 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20200404184705_InitialCreate")]
+    [Migration("20200429200655_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -18,8 +17,31 @@ namespace Persistence.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.1.11-servicing-32099")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("Relational:MaxIdentifierLength", 64);
+
+            modelBuilder.Entity("Domain.Allergies", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Allergies");
+                });
+
+            modelBuilder.Entity("Domain.Diseases", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Diseases");
+                });
 
             modelBuilder.Entity("Domain.Doctor", b =>
                 {
@@ -35,14 +57,84 @@ namespace Persistence.Migrations
                     b.ToTable("Doctors");
                 });
 
+            modelBuilder.Entity("Domain.HistoryAllergies", b =>
+                {
+                    b.Property<long>("AllergiesId");
+
+                    b.Property<long>("PacientId");
+
+                    b.Property<long>("Id");
+
+                    b.HasKey("AllergiesId", "PacientId");
+
+                    b.HasIndex("PacientId");
+
+                    b.ToTable("HistoryAllergies");
+                });
+
+            modelBuilder.Entity("Domain.HistoryDiseases", b =>
+                {
+                    b.Property<long>("DiseasesId");
+
+                    b.Property<long>("PacientId");
+
+                    b.Property<long>("Id");
+
+                    b.HasKey("DiseasesId", "PacientId", "Id");
+
+                    b.HasIndex("PacientId");
+
+                    b.ToTable("HistoryDiseases");
+                });
+
+            modelBuilder.Entity("Domain.HistoryMedications", b =>
+                {
+                    b.Property<long>("MedicationsId");
+
+                    b.Property<long>("PacientId");
+
+                    b.Property<long>("Id");
+
+                    b.HasKey("MedicationsId", "PacientId");
+
+                    b.HasIndex("PacientId");
+
+                    b.ToTable("HistoryMedications");
+                });
+
+            modelBuilder.Entity("Domain.HistoryVaccinations", b =>
+                {
+                    b.Property<long>("VaccinationsId");
+
+                    b.Property<long>("PacientId");
+
+                    b.Property<long>("Id");
+
+                    b.HasKey("VaccinationsId", "PacientId");
+
+                    b.HasIndex("PacientId");
+
+                    b.ToTable("HistoryVaccinations");
+                });
+
+            modelBuilder.Entity("Domain.Medications", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Medications");
+                });
+
             modelBuilder.Entity("Domain.Pacient", b =>
                 {
                     b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("Birthday")
-                        .HasMaxLength(6);
+                    b.Property<string>("Birthday");
 
                     b.Property<string>("City");
 
@@ -84,8 +176,7 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Domain.Records", b =>
                 {
                     b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<float>("BloodGlucose");
 
@@ -99,6 +190,8 @@ namespace Persistence.Migrations
 
                     b.Property<bool>("IsSoreThroat");
 
+                    b.Property<long>("PacientId");
+
                     b.Property<int>("PressureDown");
 
                     b.Property<int>("PressureUp");
@@ -109,11 +202,9 @@ namespace Persistence.Migrations
 
                     b.Property<DateTime>("TimeOfReceipt");
 
-                    b.Property<string>("UserIdId");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("UserIdId");
+                    b.HasIndex("PacientId");
 
                     b.ToTable("Records");
                 });
@@ -165,17 +256,27 @@ namespace Persistence.Migrations
 
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
-                        .HasName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+                        .HasName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("Domain.Vaccinations", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Vaccinations");
                 });
 
             modelBuilder.Entity("Domain.Value", b =>
                 {
                     b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Name");
 
@@ -204,8 +305,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
-                        .HasName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
+                        .HasName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles");
                 });
@@ -213,8 +313,7 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("ClaimType");
 
@@ -233,8 +332,7 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("ClaimType");
 
@@ -303,6 +401,58 @@ namespace Persistence.Migrations
                         .HasForeignKey("UserId");
                 });
 
+            modelBuilder.Entity("Domain.HistoryAllergies", b =>
+                {
+                    b.HasOne("Domain.Allergies", "Allergies")
+                        .WithMany("HistoryAllergies")
+                        .HasForeignKey("AllergiesId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Domain.Pacient", "Pacient")
+                        .WithMany("HistoryAllergies")
+                        .HasForeignKey("PacientId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Domain.HistoryDiseases", b =>
+                {
+                    b.HasOne("Domain.Diseases", "Diseases")
+                        .WithMany("HistoryDiseases")
+                        .HasForeignKey("DiseasesId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Domain.Pacient", "Pacient")
+                        .WithMany("HistoryDiseases")
+                        .HasForeignKey("PacientId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Domain.HistoryMedications", b =>
+                {
+                    b.HasOne("Domain.Medications", "Medications")
+                        .WithMany("HistoryMedications")
+                        .HasForeignKey("MedicationsId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Domain.Pacient", "Pacient")
+                        .WithMany("HistoryMedications")
+                        .HasForeignKey("PacientId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Domain.HistoryVaccinations", b =>
+                {
+                    b.HasOne("Domain.Pacient", "Pacient")
+                        .WithMany("HistoryVaccinations")
+                        .HasForeignKey("PacientId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Domain.Vaccinations", "Vaccinations")
+                        .WithMany("HistoryVaccinations")
+                        .HasForeignKey("VaccinationsId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("Domain.Pacient", b =>
                 {
                     b.HasOne("Domain.Doctor", "Doctor")
@@ -316,9 +466,10 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Records", b =>
                 {
-                    b.HasOne("Domain.User", "UserId")
+                    b.HasOne("Domain.Pacient", "Pacient")
                         .WithMany()
-                        .HasForeignKey("UserIdId");
+                        .HasForeignKey("PacientId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

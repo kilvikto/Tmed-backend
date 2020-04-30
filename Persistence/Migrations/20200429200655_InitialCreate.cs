@@ -9,6 +9,19 @@ namespace Persistence.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Allergies",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Allergies", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
                 {
@@ -49,11 +62,50 @@ namespace Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Diseases",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Diseases", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Medications",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Medications", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Vaccinations",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Vaccinations", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Values",
                 columns: table => new
                 {
                     Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
                     Surname = table.Column<string>(nullable: true)
                 },
@@ -67,7 +119,7 @@ namespace Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     RoleId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -88,7 +140,7 @@ namespace Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     UserId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -187,44 +239,14 @@ namespace Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Records",
-                columns: table => new
-                {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    TimeOfReceipt = table.Column<DateTime>(nullable: false),
-                    UserIdId = table.Column<string>(nullable: true),
-                    BloodGlucose = table.Column<float>(nullable: false),
-                    PressureUp = table.Column<int>(nullable: false),
-                    PressureDown = table.Column<int>(nullable: false),
-                    Pulse = table.Column<int>(nullable: false),
-                    Temperature = table.Column<float>(nullable: false),
-                    IsIndigestion = table.Column<bool>(nullable: false),
-                    IsRheum = table.Column<bool>(nullable: false),
-                    IsSoreThroat = table.Column<bool>(nullable: false),
-                    IsNausea = table.Column<bool>(nullable: false),
-                    IsHeadache = table.Column<bool>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Records", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Records_AspNetUsers_UserIdId",
-                        column: x => x.UserIdId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Pacients",
                 columns: table => new
                 {
                     Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
                     Surname = table.Column<string>(nullable: true),
-                    Birthday = table.Column<DateTime>(maxLength: 6, nullable: false),
+                    Birthday = table.Column<string>(nullable: true),
                     Gender = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: true),
                     Telefon_num = table.Column<string>(nullable: true),
@@ -255,6 +277,136 @@ namespace Persistence.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "HistoryAllergies",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false),
+                    AllergiesId = table.Column<long>(nullable: false),
+                    PacientId = table.Column<long>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_HistoryAllergies", x => new { x.AllergiesId, x.PacientId });
+                    table.ForeignKey(
+                        name: "FK_HistoryAllergies_Allergies_AllergiesId",
+                        column: x => x.AllergiesId,
+                        principalTable: "Allergies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_HistoryAllergies_Pacients_PacientId",
+                        column: x => x.PacientId,
+                        principalTable: "Pacients",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "HistoryDiseases",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false),
+                    DiseasesId = table.Column<long>(nullable: false),
+                    PacientId = table.Column<long>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_HistoryDiseases", x => new { x.DiseasesId, x.PacientId, x.Id });
+                    table.ForeignKey(
+                        name: "FK_HistoryDiseases_Diseases_DiseasesId",
+                        column: x => x.DiseasesId,
+                        principalTable: "Diseases",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_HistoryDiseases_Pacients_PacientId",
+                        column: x => x.PacientId,
+                        principalTable: "Pacients",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "HistoryMedications",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false),
+                    MedicationsId = table.Column<long>(nullable: false),
+                    PacientId = table.Column<long>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_HistoryMedications", x => new { x.MedicationsId, x.PacientId });
+                    table.ForeignKey(
+                        name: "FK_HistoryMedications_Medications_MedicationsId",
+                        column: x => x.MedicationsId,
+                        principalTable: "Medications",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_HistoryMedications_Pacients_PacientId",
+                        column: x => x.PacientId,
+                        principalTable: "Pacients",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "HistoryVaccinations",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false),
+                    PacientId = table.Column<long>(nullable: false),
+                    VaccinationsId = table.Column<long>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_HistoryVaccinations", x => new { x.VaccinationsId, x.PacientId });
+                    table.ForeignKey(
+                        name: "FK_HistoryVaccinations_Pacients_PacientId",
+                        column: x => x.PacientId,
+                        principalTable: "Pacients",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_HistoryVaccinations_Vaccinations_VaccinationsId",
+                        column: x => x.VaccinationsId,
+                        principalTable: "Vaccinations",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Records",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    TimeOfReceipt = table.Column<DateTime>(nullable: false),
+                    BloodGlucose = table.Column<float>(nullable: false),
+                    PressureUp = table.Column<int>(nullable: false),
+                    PressureDown = table.Column<int>(nullable: false),
+                    Pulse = table.Column<int>(nullable: false),
+                    Temperature = table.Column<float>(nullable: false),
+                    IsIndigestion = table.Column<bool>(nullable: false),
+                    IsRheum = table.Column<bool>(nullable: false),
+                    IsSoreThroat = table.Column<bool>(nullable: false),
+                    IsNausea = table.Column<bool>(nullable: false),
+                    IsHeadache = table.Column<bool>(nullable: false),
+                    PacientId = table.Column<long>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Records", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Records_Pacients_PacientId",
+                        column: x => x.PacientId,
+                        principalTable: "Pacients",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -264,8 +416,7 @@ namespace Persistence.Migrations
                 name: "RoleNameIndex",
                 table: "AspNetRoles",
                 column: "NormalizedName",
-                unique: true,
-                filter: "[NormalizedName] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUserClaims_UserId",
@@ -291,13 +442,32 @@ namespace Persistence.Migrations
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
-                unique: true,
-                filter: "[NormalizedUserName] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Doctors_UserId",
                 table: "Doctors",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_HistoryAllergies_PacientId",
+                table: "HistoryAllergies",
+                column: "PacientId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_HistoryDiseases_PacientId",
+                table: "HistoryDiseases",
+                column: "PacientId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_HistoryMedications_PacientId",
+                table: "HistoryMedications",
+                column: "PacientId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_HistoryVaccinations_PacientId",
+                table: "HistoryVaccinations",
+                column: "PacientId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Pacients_DoctorId",
@@ -310,9 +480,9 @@ namespace Persistence.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Records_UserIdId",
+                name: "IX_Records_PacientId",
                 table: "Records",
-                column: "UserIdId");
+                column: "PacientId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -333,7 +503,16 @@ namespace Persistence.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Pacients");
+                name: "HistoryAllergies");
+
+            migrationBuilder.DropTable(
+                name: "HistoryDiseases");
+
+            migrationBuilder.DropTable(
+                name: "HistoryMedications");
+
+            migrationBuilder.DropTable(
+                name: "HistoryVaccinations");
 
             migrationBuilder.DropTable(
                 name: "Records");
@@ -343,6 +522,21 @@ namespace Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Allergies");
+
+            migrationBuilder.DropTable(
+                name: "Diseases");
+
+            migrationBuilder.DropTable(
+                name: "Medications");
+
+            migrationBuilder.DropTable(
+                name: "Vaccinations");
+
+            migrationBuilder.DropTable(
+                name: "Pacients");
 
             migrationBuilder.DropTable(
                 name: "Doctors");
